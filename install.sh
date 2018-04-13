@@ -13,11 +13,30 @@ kill -9 $PROXY_PID;
 fi
 
 mkdir -p /etc/proxy || exit 1
-mkdir -p /root/1tmp-proxy-installation-directory/ || exit 1
 
-cp $BASEDIR/* /root/1tmp-proxy-installation-directory/
+if [ -w /tmp ] ; then
 
-cd /root/1tmp-proxy-installation-directory/
+TMP_IN_DIR="/tmp"
+
+else
+
+TMP_IN_DIR="/root"
+
+if [ ! -w /root ] ; then
+
+echo ""
+echo "Not enough write rigths to /tmp or /root"
+
+exit 1
+
+fi
+
+fi
+
+mkdir -p $TMP_IN_DIR/1tmp-proxy-installation-directory/ || exit 1
+cp $BASEDIR/* $TMP_IN_DIR/1tmp-proxy-installation-directory/
+
+cd $TMP_IN_DIR/1tmp-proxy-installation-directory/
 
 CHECK_USER=`cat /etc/passwd |grep 'proxy:' |grep -v 'systemd'`
 CHECK_GROUP=`cat /etc/group |grep 'proxy:' |grep -v 'systemd'`
@@ -89,7 +108,7 @@ echo "Starting proxy..."
 
 /etc/init.d/proxy restart
 
-rm -rf /root/1tmp-proxy-installation-directory/
+rm -rf $TMP_IN_DIR/1tmp-proxy-installation-directory/
 
 echo ""
 echo "TCP Port Socks5: $SPORT"
