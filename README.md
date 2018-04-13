@@ -1,5 +1,7 @@
 Russian version:
 
+Сделайте свой Socks5 Proxy с авторизацией меньше чем за 1 минуту.
+
 Как быстро установить Socks5 Proxy на Debian 7,8,9 x86_64:
 
 1. Скачайте установочный скрипт
@@ -14,9 +16,11 @@ Russian version:
 
     `cd telegram-proxy ; ./install.sh`
 
-Пропишите настройки Socks5 Proxy в Телеграм мессенджере
+Пропишите настройки Socks5 Proxy в Телеграм мессенджере или в любых других программах
 
 English version:
+
+Build your own Socks5 Proxy with authorization at less than 1 minute.
 
 How to fastly setup Socks5 Proxy for Debian 7,8,9 x86_64:
 
@@ -32,4 +36,4 @@ How to fastly setup Socks5 Proxy for Debian 7,8,9 x86_64:
 
     `cd telegram-proxy ; ./install.sh`
 
-Set setting Socks5 proxy in Telegram messenger
+Set setting Socks5 proxy in Telegram messenger or in any other programs
