@@ -27,7 +27,7 @@ TMP_IN_DIR="/root"
 if [ ! -w /root ] ; then
 
 echo ""
-echo "Not enough rigths fo write to /tmp or /root"
+echo "Not enough rigths for write to /tmp or /root"
 
 exit 1
 
