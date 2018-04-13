@@ -22,7 +22,7 @@ English version:
 
 Build your own Socks5 Proxy with authorization at less than 1 minute.
 
-How to fastly setup Socks5 Proxy for Debian 7,8,9 x86_64:
+How to fastly setup Socks5 Proxy on Debian 7,8,9 x86_64:
 
 1.  Download installation script
 
