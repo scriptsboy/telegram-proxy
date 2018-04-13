@@ -4,6 +4,8 @@ BASEDIR=$(dirname "$0")
 
 source $BASEDIR/proxy.conf
 
+MACHINE_ARCH=`uname -m`
+
 PROXY_PID=`pgrep -f proxy.*socks`
 
 if [ ! -z $PROXY_PID ]; then
@@ -25,7 +27,7 @@ TMP_IN_DIR="/root"
 if [ ! -w /root ] ; then
 
 echo ""
-echo "Not enough write rigths to /tmp or /root"
+echo "Not enough rigths fo write to /tmp or /root"
 
 exit 1
 
@@ -36,14 +38,44 @@ fi
 mkdir -p $TMP_IN_DIR/1tmp-proxy-installation-directory/ || exit 1
 cp $BASEDIR/* $TMP_IN_DIR/1tmp-proxy-installation-directory/
 
+echo "Unpacking proxy server"
+
+if [ "$MACHINE_ARCH" = "x86_64" ]; then
+
+cp -r $BASEDIR/proxy-binaries/proxy-linux-amd64.tar.gz $TMP_IN_DIR/1tmp-proxy-installation-directory/
+
+elif [ "$MACHINE_ARCH" = "i386" ] || [ "$MACHINE_ARCH" = "i486" ] || [ "$MACHINE_ARCH" = "i586" ] || [ "$MACHINE_ARCH" = "i686" ] ; then
+
+cp -r $BASEDIR/proxy-binaries/proxy-linux-386.tar.gz $TMP_IN_DIR/1tmp-proxy-installation-directory/
+
+else
+
+echo "Unsupported machine architecture: $MACHINE_ARCH"
+
+exit 1
+
+fi
+
 cd $TMP_IN_DIR/1tmp-proxy-installation-directory/
+
+if [ "$MACHINE_ARCH" = "x86_64" ]; then
+
+tar xzf proxy-linux-amd64.tar.gz
+
+elif [ "$MACHINE_ARCH" = "i386" ] || [ "$MACHINE_ARCH" = "i486" ] || [ "$MACHINE_ARCH" = "i586" ] || [ "$MACHINE_ARCH" = "i686" ] ; then
+
+tar xzf proxy-linux-386.tar.gz
+
+fi
 
 CHECK_USER=`cat /etc/passwd |grep 'proxy:' |grep -v 'systemd'`
 CHECK_GROUP=`cat /etc/group |grep 'proxy:' |grep -v 'systemd'`
 
+echo "Installing:"
+echo ""
+
 if [ -z "$CHECK_GROUP" ]; then
 
-echo ""
 echo "Adding proxy group to system"
 
 groupadd proxy
@@ -62,27 +94,6 @@ echo "Copying configuration to /etc/proxy/proxy.conf file"
 
 cp proxy.conf /etc/proxy/
 
-echo "Downloading proxy"
-
-if [ -e proxy-linux-amd64.tar.gz ]; then
-
-rm -f proxy-linux-amd64.tar.gz
-
-fi
-
-wget https://github.com/snail007/goproxy/releases/download/v4.6/proxy-linux-amd64.tar.gz 1>/dev/null 2>/dev/null
-
-if [ ! -e proxy-linux-amd64.tar.gz ]; then
-
-echo ""
-echo "File is not downloaded"
-echo ""
-
-fi
-
-echo "Unpacking proxy-linux-amd64.tar.gz"
-
-tar xzf proxy-linux-amd64.tar.gz
 
 if [ ! -e proxy ]; then
 
@@ -97,7 +108,7 @@ echo "Copying proxy binary to /usr/bin/proxy"
 cp proxy /usr/bin/
 chmod a+x /usr/bin/proxy
 
-echo "Installing SysV init scipt /etc/init.d/proxy"
+echo "Installing SysV init script /etc/init.d/proxy"
 
 cp proxy-init /etc/init.d/proxy
 
