@@ -1,6 +1,6 @@
 Russian version:
 
-Как быстро установить Socks5 Proxy на debian 7,8,9 x86_64
+Как быстро установить Socks5 Proxy на Debian 7,8,9 x86_64
 
 1. Скачайте установочный скрипт
 
