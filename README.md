@@ -12,7 +12,7 @@ Russian version:
 
 3. Запустите установку
 
-    `cd telegream-proxy ; ./install.sh`
+    `cd telegram-proxy ; ./install.sh`
 
 Пропишите настройки Socks5 Proxy в Телеграм мессенджере
 
