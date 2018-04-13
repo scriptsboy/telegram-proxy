@@ -22,7 +22,7 @@ start_proxy() {
 
 #Starting Proxy
 
-/usr/bin/proxy socks --daemon -t tcp -p ":$SPORT" -a "$SUSER:$SPASS"
+start-stop-daemon --start --quiet --chuid proxy --exec /usr/bin/proxy socks -- --daemon -t tcp -p ":$SPORT" -a "$SUSER:$SPASS"
 
 }
 
