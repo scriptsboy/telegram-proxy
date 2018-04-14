@@ -216,6 +216,7 @@ cp proxy-sysv /etc/init.d/proxy
 
 SYSV1=`which update-rc.d`
 SYSV2=`which chkconfig`
+SYSV3=`which rc-update`
 
 if [ ! -z "$SYSV1" ]; then
 
@@ -230,7 +231,13 @@ chkconfig --level 2345 proxy on
 
 fi
 
-if [ -z "$SYSV1" ] && [ -z "$SYSV2" ]; then
+if [ ! -z "$SYSV3" ]; then
+
+rc-update add proxy
+
+fi
+
+if [ -z "$SYSV1" ] && [ -z "$SYSV2" ] && [ -z "$SYSV3" ]; then
 
 echo ""
 echo "Please manually enable auto-startup in your linux distribution for /etc/init.d/proxy script"
