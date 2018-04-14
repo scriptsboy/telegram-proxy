@@ -280,6 +280,15 @@ echo "IP: $LIP:$SPORT"
 
 done
 
+echo ""
+
+for LIP in $( IFS=$'\n'; echo "${IPS[*]}" )
+do
+
+echo "Telegram Link: tg://socks?server=$LIP&port=$SPORT&user=$SUSER&pass=$SPASS"
+
+done
+
 else
 
 IPS=$(ip -o addr | awk '!/^[0-9]*: ?lo|link\/ether/ {gsub("/", " "); print $4}')
@@ -288,6 +297,15 @@ for LIP in $( IFS=$'\n'; echo "${IPS[*]}" )
 do
 
 echo "IP: $LIP:$SPORT"
+
+done
+
+echo ""
+
+for LIP in $( IFS=$'\n'; echo "${IPS[*]}" )
+do
+
+echo "Telegram Link: tg://socks?server=$LIP&port=$SPORT&user=$SUSER&pass=$SPASS"
 
 done
 
