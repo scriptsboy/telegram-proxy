@@ -22,7 +22,17 @@ start_proxy() {
 
 #Starting Proxy
 
+STDE=`which start-stop-daemon`
+
+if [ ! -z "$STDE" ]; then
+
 start-stop-daemon --start --quiet --chuid proxy --exec /usr/bin/proxy socks -- --daemon -t tcp -p ":$SPORT" -a "$SUSER:$SPASS"
+
+else
+
+su -s /bin/sh -c 'exec "$0" "$@"' proxy -- /usr/bin/proxy socks --daemon -t tcp -p ":$SPORT" -a "$SUSER:$SPASS"
+
+fi
 
 }
 

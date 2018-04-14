@@ -88,7 +88,6 @@ echo "Copying configuration to /etc/proxy/proxy.conf file"
 
 cp proxy.conf /etc/proxy/
 
-
 if [ ! -e proxy ]; then
 
 echo ""
@@ -120,7 +119,8 @@ fi
 
 if [ ! -z "$SYSV2" ]; then
 
-chkconfig --add proxy ; chkconfig level 2345 proxy on
+chkconfig --add proxy
+chkconfig level 2345 proxy on
 
 fi
 
@@ -174,7 +174,8 @@ fi
 
 if [ ! -z "$SYSV2" ]; then
 
-chkconfig --add proxy ; chkconfig level 2345 proxy on
+chkconfig --add proxy
+chkconfig level 2345 proxy on
 
 fi
 
