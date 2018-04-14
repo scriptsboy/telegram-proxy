@@ -10,7 +10,7 @@ Russian version:
 
 2. Измените настройки прокси в proxy.conf файле
 
-    `nano telegram-proxy/proxy.conf`
+    `vi telegram-proxy/proxy.conf` / `nano telegram-proxy/proxy.conf`
 
 3. Запустите установку
 
@@ -30,7 +30,7 @@ How to fastly setup Socks5 Proxy on Rhel/Centos 6+ ; Ubuntu 14.04+ Debian 7+ x86
 
 2.  Change proxy parameters in proxy.conf file
 
-    `nano telegram-proxy/proxy.conf`
+    `vi telegram-proxy/proxy.conf` / `nano telegram-proxy/proxy.conf`
 
 3.  Run installation
 
