@@ -43,6 +43,7 @@ fi
 if [ ! -z "$WAPK" ]; then
 
 apk update
+apk add bash
 apk add binutils
 apk add shadow
 
@@ -258,10 +259,23 @@ fi
 
 rm -rf $TMP_IN_DIR/1tmp-proxy-installation-directory/
 
+IPS=($(hostname -I))
+
 echo ""
 echo "TCP Port Socks5: $SPORT"
 echo "Username: $SUSER"
 echo "Password: $SPASS"
+echo ""
+echo "Socks5 Proxy IPs:"
+echo ""
+
+for LIP in $( IFS=$'\n'; echo "${IPS[*]}" )
+do
+
+echo "IP: $LIP:$SPORT"
+
+done
+
 echo ""
 echo "Enjoy!"
 
