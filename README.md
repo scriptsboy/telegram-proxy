@@ -30,7 +30,7 @@ Supported systems x86 32/64bit:
 
 	Rhel/Centos 6+ ; Ubuntu 14.04+ ; Debian 7+ ; OpenSUSE 42+ ; Gentoo Linux ; Alpine 3.4+ and Other...
 
-How to fastly setup Socks5 Proxy on Rhel/Centos 6+ ; Ubuntu 14.04+ ; Debian 7+ x86 32/64 bit:
+How to fastly setup Socks5 Proxy:
 
 1.  Download installation script
 
