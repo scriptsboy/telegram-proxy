@@ -10,6 +10,7 @@ WSTRINGS=`which strings`
 WAPT=`which apt-get`
 WAPK=`which apk`
 WYUM=`which yum`
+WZYP=`which zypper`
 
 if [ -z "$WSTRINGS" ]; then
 
@@ -23,6 +24,12 @@ fi
 if [ ! -z "$WYUM" ]; then
 
 yum -y install binutils
+
+fi
+
+if [ ! -z "$WZYP" ]; then
+
+zypper -n install binutils
 
 fi
 
