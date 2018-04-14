@@ -2,7 +2,7 @@ Russian version:
 
 Сделайте свой Socks5 Proxy с авторизацией меньше чем за 1 минуту.
 
-Как быстро установить Socks5 Proxy на Debian 7,8,9 x86 32/64 bit:
+Как быстро установить Socks5 Proxy на Rhel/Centos 6+ ; Ubuntu 14.04+ Debian 7+ x86 32/64 bit:
 
 1. Скачайте установочный скрипт
 
@@ -22,7 +22,7 @@ English version:
 
 Build your own Socks5 Proxy with authorization at less than 1 minute.
 
-How to fastly setup Socks5 Proxy on Debian 7,8,9 x86 32/64 bit:
+How to fastly setup Socks5 Proxy on Rhel/Centos 6+ ; Ubuntu 14.04+ Debian 7+ x86 32/64 bit:
 
 1.  Download installation script
 
