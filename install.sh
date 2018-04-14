@@ -6,6 +6,26 @@ source $BASEDIR/proxy.conf
 
 MACHINE_ARCH=`uname -m`
 
+WSTRINGS=`which strings`
+WAPT=`which apt-get`
+WYUM=`which yum`
+
+if [ -z "$WSTRINGS" ]; then
+
+if [ ! -z "$WAPT" ]; then
+
+apt-get -y install binutils
+
+fi
+
+if [ ! -z "$WYUM" ]; then
+
+yum -y install binutils
+
+fi
+
+fi
+
 INIT_SYSTEM=`strings /sbin/init | awk 'match($0, /(upstart|systemd|sysvinit)/) { print tolower(substr($0, RSTART, RLENGTH));exit; }'`
 
 PROXY_PID=`pgrep -f proxy.*socks`
