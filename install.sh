@@ -8,9 +8,10 @@ MACHINE_ARCH=`uname -m`
 
 WSTRINGS=`which strings`
 WAPT=`which apt-get`
-WAPK=`which apk`
 WYUM=`which yum`
 WZYP=`which zypper`
+WEMR=`which emerge`
+WAPK=`which apk`
 
 if [ -z "$WSTRINGS" ]; then
 
@@ -30,6 +31,12 @@ fi
 if [ ! -z "$WZYP" ]; then
 
 zypper -n install binutils
+
+fi
+
+if [ ! -z "$WEMR" ]; then
+
+emerge binutils
 
 fi
 
