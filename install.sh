@@ -237,14 +237,6 @@ rc-update add proxy
 
 fi
 
-if [ -z "$SYSV1" ] && [ -z "$SYSV2" ] && [ -z "$SYSV3" ]; then
-
-echo ""
-echo "Please manually enable auto-startup in your linux distribution for /etc/init.d/proxy script"
-echo ""
-
-fi
-
 echo "Starting proxy..."
 
 /etc/init.d/proxy restart
