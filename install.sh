@@ -120,7 +120,7 @@ fi
 if [ ! -z "$SYSV2" ]; then
 
 chkconfig --add proxy
-chkconfig level 2345 proxy on
+chkconfig --level 2345 proxy on
 
 fi
 
@@ -157,7 +157,7 @@ echo "Installing Upstart Script /etc/init/proxy.conf"
 
 cp proxy-upstart /etc/init/proxy.conf
 
-echo "Starting proxy..."
+#echo "Starting proxy..."
 
 #start proxy
 
@@ -175,7 +175,7 @@ fi
 if [ ! -z "$SYSV2" ]; then
 
 chkconfig --add proxy
-chkconfig level 2345 proxy on
+chkconfig --level 2345 proxy on
 
 fi
 
