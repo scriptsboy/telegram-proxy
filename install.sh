@@ -55,7 +55,7 @@ INIT_SYSTEM=`strings /sbin/init | awk 'match($0, /(upstart|systemd|sysvinit|busy
 
 PROXY_PID=`pgrep -f proxy.*socks`
 
-if [ ! -z $PROXY_PID ]; then
+if [ ! -z "$PROXY_PID" ]; then
 
 kill -9 $PROXY_PID;
 
