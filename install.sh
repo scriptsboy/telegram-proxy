@@ -120,7 +120,7 @@ fi
 
 if [ ! -z "$SYSV2" ]; then
 
-update-rc.d -f proxy enable
+chkconfig --add proxy ; chkconfig level 2345 proxy on
 
 fi
 
@@ -159,7 +159,36 @@ cp proxy-upstart /etc/init/proxy.conf
 
 echo "Starting proxy..."
 
-restart proxy
+#start proxy
+
+cp proxy-sysv /etc/init.d/proxy
+
+SYSV1=`which update-rc.d`
+SYSV2=`which chkconfig`
+
+if [ ! -z "$SYSV1" ]; then
+
+update-rc.d -f proxy enable
+
+fi
+
+if [ ! -z "$SYSV2" ]; then
+
+chkconfig --add proxy ; chkconfig level 2345 proxy on
+
+fi
+
+if [ -z "$SYSV1" ] && [ -z "$SYSV2" ]; then
+
+echo ""
+echo "Please manually enable auto-startup in your linux distribution for /etc/init.d/proxy script"
+echo ""
+
+fi
+
+echo "Starting proxy..."
+
+/etc/init.d/proxy restart
 
 fi
 
