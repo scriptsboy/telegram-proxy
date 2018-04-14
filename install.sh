@@ -6,6 +6,8 @@ source $BASEDIR/proxy.conf
 
 MACHINE_ARCH=`uname -m`
 
+INIT_SYSTEM=`strings /sbin/init | awk 'match($0, /(upstart|systemd|sysvinit)/) { print tolower(substr($0, RSTART, RLENGTH));exit; }'`
+
 PROXY_PID=`pgrep -f proxy.*socks`
 
 if [ ! -z $PROXY_PID ]; then
@@ -36,17 +38,19 @@ fi
 fi
 
 mkdir -p $TMP_IN_DIR/1tmp-proxy-installation-directory/ || exit 1
-cp $BASEDIR/* $TMP_IN_DIR/1tmp-proxy-installation-directory/
+cp -R $BASEDIR/* $TMP_IN_DIR/1tmp-proxy-installation-directory/
 
 echo "Unpacking proxy server"
 
+cd $TMP_IN_DIR/1tmp-proxy-installation-directory/
+
 if [ "$MACHINE_ARCH" = "x86_64" ]; then
 
-cp -r $BASEDIR/proxy-binaries/proxy-linux-amd64.tar.gz $TMP_IN_DIR/1tmp-proxy-installation-directory/
+tar xzf proxy-binaries/proxy-linux-amd64.tar.gz
 
 elif [ "$MACHINE_ARCH" = "i386" ] || [ "$MACHINE_ARCH" = "i486" ] || [ "$MACHINE_ARCH" = "i586" ] || [ "$MACHINE_ARCH" = "i686" ] ; then
 
-cp -r $BASEDIR/proxy-binaries/proxy-linux-386.tar.gz $TMP_IN_DIR/1tmp-proxy-installation-directory/
+tar xzf proxy-binaries/proxy-linux-386.tar.gz
 
 else
 
@@ -56,17 +60,7 @@ exit 1
 
 fi
 
-cd $TMP_IN_DIR/1tmp-proxy-installation-directory/
-
-if [ "$MACHINE_ARCH" = "x86_64" ]; then
-
-tar xzf proxy-linux-amd64.tar.gz
-
-elif [ "$MACHINE_ARCH" = "i386" ] || [ "$MACHINE_ARCH" = "i486" ] || [ "$MACHINE_ARCH" = "i586" ] || [ "$MACHINE_ARCH" = "i686" ] ; then
-
-tar xzf proxy-linux-386.tar.gz
-
-fi
+ls -la $TMP_IN_DIR/1tmp-proxy-installation-directory/
 
 CHECK_USER=`cat /etc/passwd |grep 'proxy:' |grep -v 'systemd'`
 CHECK_GROUP=`cat /etc/group |grep 'proxy:' |grep -v 'systemd'`
@@ -106,18 +100,69 @@ fi
 echo "Copying proxy binary to /usr/bin/proxy"
 
 cp proxy /usr/bin/
+chown root.root /usr/bin/proxy
 chmod a+x /usr/bin/proxy
 
-echo "Installing SysV init script /etc/init.d/proxy"
+if [ "$INIT_SYSTEM" = "sysvinit" ]; then
 
-cp proxy-init /etc/init.d/proxy
+echo "Installing SysV Init script /etc/init.d/proxy"
+
+cp proxy-sysv /etc/init.d/proxy
+
+SYSV1=`which update-rc.d`
+SYSV2=`which chkconfig`
+
+if [ ! -z "$SYSV1" ]; then
 
 update-rc.d -f proxy enable
-update-rc.d -f proxy defaults
+
+fi
+
+if [ ! -z "$SYSV2" ]; then
+
+update-rc.d -f proxy enable
+
+fi
+
+if [ -z "$SYSV1" ] && [ -z "$SYSV2" ]; then
+
+echo ""
+echo "Please manually enable auto-startup in your linux distribution for /etc/init.d/proxy script"
+echo ""
+
+fi
 
 echo "Starting proxy..."
 
 /etc/init.d/proxy restart
+
+fi
+
+if [ "$INIT_SYSTEM" = "systemd" ]; then
+
+echo "Installing Systemd Unit /lib/systemd/system/proxy.service"
+
+cp proxy-systemd /lib/systemd/system/proxy.service
+systemctl enable proxy
+
+echo "Starting proxy..."
+
+systemctl restart proxy
+
+fi
+
+if [ "$INIT_SYSTEM" = "upstart" ]; then
+
+echo "Installing Systemd Unit /lib/systemd/system/proxy.service"
+
+cp proxy-systemd /lib/systemd/system/proxy.service
+systemctl enable proxy
+
+echo "Starting proxy..."
+
+systemctl restart proxy
+
+fi
 
 rm -rf $TMP_IN_DIR/1tmp-proxy-installation-directory/
 

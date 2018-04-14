@@ -1,0 +1,6 @@
+script
+  set -a
+  . /etc/proxy/proxy.conf
+  setuid proxy
+  setgid proxy
+end script

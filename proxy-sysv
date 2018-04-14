@@ -1,0 +1,58 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:       proxy
+# Required-Start:    $local_fs $remote_fs $network $syslog $named
+# Required-Stop:     $local_fs $remote_fs $network $syslog $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the proxy
+# Description:       starts proxy using start-stop-daemon
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+#Loading configuration variables
+
+. /etc/proxy/proxy.conf || exit 1
+
+#Init script
+
+start_proxy() {
+
+#Starting Proxy
+
+start-stop-daemon --start --quiet --chuid proxy --exec /usr/bin/proxy socks -- --daemon -t tcp -p ":$SPORT" -a "$SUSER:$SPASS"
+
+}
+
+stop_proxy() {
+
+PROXY_PID=`pgrep -f proxy.*socks`
+
+if [ ! -z $PROXY_PID ]; then
+
+kill -9 $PROXY_PID;
+
+fi
+
+sleep 3
+
+}
+
+case "$1" in
+        start)
+                start_proxy
+                ;;
+        stop)
+                stop_proxy
+                ;;
+        restart)
+                stop_proxy
+                start_proxy
+                ;;
+        *)
+                echo "Usage: /etc/init.d/proxy {start|stop|restart}" >&2
+                exit 3
+                ;;
+esac

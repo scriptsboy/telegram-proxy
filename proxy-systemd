@@ -1,0 +1,13 @@
+[Unit]
+Description=Proxy Server
+After=network.target
+
+[Service] 
+Type=forking
+EnvironmentFile=-/etc/proxy/proxy.conf
+User=proxy
+Group=proxy
+ExecStart=/usr/bin/proxy socks --daemon -t tcp -p ":${SPORT}" -a "${SUSER}:${SPASS}"
+
+[Install]
+WantedBy=multi-user.target
