@@ -30,9 +30,9 @@ if [ ! -z "$WAPK" ]; then
 
 apk update
 apk add binutils
+apk add shadow
 
 fi
-
 
 fi
 
@@ -89,8 +89,6 @@ echo "Unsupported machine architecture: $MACHINE_ARCH"
 exit 1
 
 fi
-
-ls -la $TMP_IN_DIR/1tmp-proxy-installation-directory/
 
 CHECK_USER=`cat /etc/passwd |grep 'proxy:' |grep -v 'systemd'`
 CHECK_GROUP=`cat /etc/group |grep 'proxy:' |grep -v 'systemd'`
@@ -228,6 +226,8 @@ if [ "$INIT_SYSTEM" = "busybox" ]; then
 echo "Installing Busybox Script /etc/init.d/proxy"
 
 cp proxy-busybox /etc/init.d/proxy
+
+rc-update add proxy
 
 echo "Starting proxy..."
 
