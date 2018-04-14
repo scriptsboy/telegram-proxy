@@ -259,7 +259,7 @@ fi
 
 rm -rf $TMP_IN_DIR/1tmp-proxy-installation-directory/
 
-IPS=($(hostname -I))
+IPS=($(hostname -I 2>/dev/null))
 
 echo ""
 echo "TCP Port Socks5: $SPORT"
