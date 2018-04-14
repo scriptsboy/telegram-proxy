@@ -177,7 +177,16 @@ if [ "$INIT_SYSTEM" = "systemd" ]; then
 
 echo "Installing Systemd Unit /lib/systemd/system/proxy.service"
 
+if [ ! -d /lib/systemd/system ]; then
+
+cp proxy-systemd /usr/lib/systemd/system/proxy.service
+
+else
+
 cp proxy-systemd /lib/systemd/system/proxy.service
+
+fi
+
 systemctl enable proxy
 
 echo "Starting proxy..."
