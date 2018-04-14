@@ -1,0 +1,44 @@
+#!/sbin/openrc-run
+
+description="Proxy Server"
+
+name="busybox proxy"
+
+depend() {
+        need net
+}
+
+start() {
+	ebegin "Starting Proxy"
+	. /etc/proxy/proxy.conf
+	STDE=`which start-stop-daemon`
+
+	if [ ! -z "$STDE" ]; then
+
+	start-stop-daemon --start --quiet --chuid proxy --exec /usr/bin/proxy socks -- --daemon -t tcp -p ":$SPORT" -a "$SUSER:$SPASS"
+
+	else
+
+	su -s /bin/sh -c 'exec "$0" "$@"' proxy -- /usr/bin/proxy socks --daemon -t tcp -p ":$SPORT" -a "$SUSER:$SPASS"
+
+	fi
+
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping Proxy"
+
+	PROXY_PID=`pgrep -f proxy.*socks`
+
+	if [ ! -z $PROXY_PID ]; then
+
+	kill -9 $PROXY_PID;
+
+	fi
+
+	sleep 3
+
+	eend $?
+
+}

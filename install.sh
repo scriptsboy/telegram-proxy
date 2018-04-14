@@ -8,12 +8,14 @@ MACHINE_ARCH=`uname -m`
 
 WSTRINGS=`which strings`
 WAPT=`which apt-get`
+WAPK=`which apk`
 WYUM=`which yum`
 
 if [ -z "$WSTRINGS" ]; then
 
 if [ ! -z "$WAPT" ]; then
 
+apt-get update
 apt-get -y install binutils
 
 fi
@@ -24,9 +26,17 @@ yum -y install binutils
 
 fi
 
+if [ ! -z "$WAPK" ]; then
+
+apk update
+apk add binutils
+
 fi
 
-INIT_SYSTEM=`strings /sbin/init | awk 'match($0, /(upstart|systemd|sysvinit)/) { print tolower(substr($0, RSTART, RLENGTH));exit; }'`
+
+fi
+
+INIT_SYSTEM=`strings /sbin/init | awk 'match($0, /(upstart|systemd|sysvinit|busybox)/) { print tolower(substr($0, RSTART, RLENGTH));exit; }'`
 
 PROXY_PID=`pgrep -f proxy.*socks`
 
@@ -173,7 +183,7 @@ fi
 
 if [ "$INIT_SYSTEM" = "upstart" ]; then
 
-echo "Installing Upstart Script /etc/init/proxy.conf"
+echo "Installing Upstart/SysV Scripts /etc/init.d/proxy ; /etc/init/proxy.conf"
 
 cp proxy-upstart /etc/init/proxy.conf
 
@@ -206,6 +216,18 @@ echo "Please manually enable auto-startup in your linux distribution for /etc/in
 echo ""
 
 fi
+
+echo "Starting proxy..."
+
+/etc/init.d/proxy restart
+
+fi
+
+if [ "$INIT_SYSTEM" = "busybox" ]; then
+
+echo "Installing Busybox Script /etc/init.d/proxy"
+
+cp proxy-busybox /etc/init.d/proxy
 
 echo "Starting proxy..."
 
