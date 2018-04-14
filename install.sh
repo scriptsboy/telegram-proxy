@@ -269,12 +269,27 @@ echo ""
 echo "Socks5 Proxy IPs:"
 echo ""
 
+if [ ! -z "$IPS" ]; then
+
 for LIP in $( IFS=$'\n'; echo "${IPS[*]}" )
 do
 
 echo "IP: $LIP:$SPORT"
 
 done
+
+else
+
+IPS=$(ip -o addr | awk '!/^[0-9]*: ?lo|link\/ether/ {gsub("/", " "); print $4}')
+
+for LIP in $( IFS=$'\n'; echo "${IPS[*]}" )
+do
+
+echo "IP: $LIP:$SPORT"
+
+done
+
+fi
 
 echo ""
 echo "Enjoy!"
