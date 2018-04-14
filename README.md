@@ -4,9 +4,7 @@ Russian version:
 
 Поддерживаемые системы x86 32/64bit:
 
-	Rhel/Centos 6+ ; Ubuntu 14.04+ ; Debian 7+
-
-	OpenSUSE 42+   ; Gentoo Linux  ; Alpine 3.4+:
+	Rhel/Centos 6+ ; Ubuntu 14.04+ ; Debian 7+ ; OpenSUSE 42+ ; Gentoo Linux ; Alpine 3.4+ и Другие...
 
 Как быстро установить Socks5 Proxy:
 
@@ -28,11 +26,9 @@ English version:
 
 Build your own Socks5 Proxy with authorization at less than 1 minute.
 
-Supported systemc x86 32/64bit:
+Supported systems x86 32/64bit:
 
-	Rhel/Centos 6+ ; Ubuntu 14.04+ ; Debian 7+
-
-	OpenSUSE 42+   ; Gentoo Linux  ; Alpine 3.4+:
+	Rhel/Centos 6+ ; Ubuntu 14.04+ ; Debian 7+ ; OpenSUSE 42+ ; Gentoo Linux ; Alpine 3.4+ and Other...
 
 How to fastly setup Socks5 Proxy on Rhel/Centos 6+ ; Ubuntu 14.04+ ; Debian 7+ x86 32/64 bit:
 
