@@ -153,14 +153,13 @@ fi
 
 if [ "$INIT_SYSTEM" = "upstart" ]; then
 
-echo "Installing Systemd Unit /lib/systemd/system/proxy.service"
+echo "Installing Upstart Script /etc/init/proxy.conf"
 
-cp proxy-systemd /lib/systemd/system/proxy.service
-systemctl enable proxy
+cp proxy-upstart /etc/init/proxy.conf
 
 echo "Starting proxy..."
 
-systemctl restart proxy
+restart proxy
 
 fi
 
