@@ -157,6 +157,7 @@ SYSV3=`which rc-update`
 
 if [ ! -z "$SYSV1" ]; then
 
+update-rc.d -f proxy defaults
 update-rc.d -f proxy enable
 
 fi
@@ -220,6 +221,7 @@ SYSV3=`which rc-update`
 
 if [ ! -z "$SYSV1" ]; then
 
+update-rc.d -f proxy defaults
 update-rc.d -f proxy enable
 
 fi
