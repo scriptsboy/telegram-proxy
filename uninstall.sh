@@ -13,7 +13,6 @@ fi
 test -d /etc/proxy && rm -rf /etc/proxy || exit 1
 
 CHECK_USER=`cat /etc/passwd |grep 'proxy:' |grep -v 'systemd'`
-CHECK_GROUP=`cat /etc/group |grep 'proxy:' |grep -v 'systemd'`
 
 echo "Uninstalling:"
 echo ""
@@ -25,6 +24,8 @@ echo "Deleting proxy user from system"
 userdel proxy
 
 fi
+
+CHECK_GROUP=`cat /etc/group |grep 'proxy:' |grep -v 'systemd'`
 
 if [ ! -z "$CHECK_GROUP" ]; then
 
