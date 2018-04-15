@@ -11,6 +11,7 @@ WAPT=`which apt-get`
 WYUM=`which yum`
 WZYP=`which zypper`
 WEMR=`which emerge`
+WPAC=`which pacman`
 WAPK=`which apk`
 
 if [ -z "$WSTRINGS" ]; then
@@ -37,6 +38,13 @@ fi
 if [ ! -z "$WEMR" ]; then
 
 emerge binutils
+
+fi
+
+if [ ! -z "$WPAC" ]; then
+
+pacman-key --populate archlinux
+pacman --noconfirm -y -S binutils
 
 fi
 
